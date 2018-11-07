@@ -1,7 +1,5 @@
 // 首先连接MySQL数据库
-
 // 封装一个query方法，方便我们进行sql语句执行
-
 import mysql from 'mysql'
 import { db, dbName } from '../config'
 
@@ -12,9 +10,11 @@ let pool
 
 // 需要创建一个数据库，并且能够将sql文件下的sql文件执行
 const sqlContent = fs.readFileSync(path.resolve(__dirname, '..', './sql/v_blog.sql'), 'utf-8')
+// console.log(sqlContent)
 
 // 第一次连接数据控的时候，没有指定数据控名称，这次连接的目的是为了能够创建一个v-blog数据库
 const init = mysql.createConnection(db)
+console.log(init);
 init.connect()
 
 init.query('CREATE DATABASE v_blog', err => {
@@ -24,11 +24,11 @@ init.query('CREATE DATABASE v_blog', err => {
     // console.log(pool)
     if (err) {
         console.log(err)
-        console.log('v_blog Database created already.')
+        // console.log('v_blog Database created already.')
     } else {
         console.log('create v_blog Database ')
         // 将v-blog.sql文件执行
-        pool.query(sqlContent).then(res => {
+        query(sqlContent).then(res => {
             console.log('import sql is success')
         }).catch(err => {
             console.log('import sql is error')
@@ -36,16 +36,15 @@ init.query('CREATE DATABASE v_blog', err => {
         })
     }
 })
-
 init.end()
 
 export default function query(sql, values) {
     return new Promise((resolve, reject) => {
-        pool.getConnection(function (err, collection) {
+        pool.getConnection(function (err, connection) {
             if (err) {
                 reject(err);
             } else {
-                collection.query(sql, values, (err, data) => {
+                connection.query(sql, values, (err, data) => {
                     if (err) {
                         reject(err);
                     } else {
