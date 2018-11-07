@@ -6,6 +6,11 @@ import router from './router'
 // 将状态管理的文件引进
 import store from '@/store'
 
+import '@/assets/image/icon/iconfont'
+
+// 将全局的
+import '@/assets/style/index'
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
