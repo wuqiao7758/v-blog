@@ -7,10 +7,14 @@ import router from './router'
 import store from '@/store'
 
 import '@/assets/image/icon/iconfont'
-
 // 将全局的
 import '@/assets/style/index'
-
+// 如果以后做项目，vue里面的插件都是在main入口文件引入的
+import VeeValidate from 'vee-validate'
+// 我们在这里引入消息提示的插件
+import Notifications from 'vue-notification'
+Vue.use(VeeValidate)
+Vue.use(Notifications)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

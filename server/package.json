@@ -6,7 +6,7 @@
   "scripts": {
     "babel-node": "babel-node --presets=/*a*/ --ignore='foo|bar|baz'",
     "build": "babel index.js -d dist",
-    "serve": "npm run build && nodemon dist/index.js",
+    "server": "npm run build && nodemon dist/index.js",
     "dev": "nodemon index.js --exec babel-node"
   },
   "author": "",
