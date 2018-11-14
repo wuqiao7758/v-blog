@@ -15,8 +15,6 @@ class UserController{
         let user = ctx.request.body.user
         let password = ctx.request.body.password
     // 验证用户名/密码是否合法
-        console.log(user);
-        console.log(password);
     // 检查用户是否存在
 const res = (await User.getUserByName(user))[0];
 console.log(res);
@@ -48,6 +46,13 @@ if(res){
 
     //最后返回token
 
+    }
+
+    async logout(ctx){
+        ctx.body = {
+            success:true,
+            message:'退出成功'
+        }
     }
 }
 

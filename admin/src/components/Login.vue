@@ -59,9 +59,8 @@ export default {
             // console.log(res)
             if (res.success) {
               let token = res.token;
-              console.log(token);
               setToken(token)
-              this.$store.commit(SET_TOKEN,token);
+              this.$store.commit('SET_TOKEN',token);
               this.$router.push('/list');
             } else {
               this.$notify({

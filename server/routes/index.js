@@ -1,6 +1,7 @@
 import Router from 'koa-router'
 import {base_API} from '../config'
 import UserController from '../Controller/UserController'
+import checkToken from '../utils/checkToken'
 const router = new Router()
 router.get('/',async ctx=>{
     ctx.body = '欢迎使用v_blog接口测试服务器!!!!'
@@ -11,5 +12,8 @@ router.prefix(`${base_API}`)
 // router.get('/index',async ctx=>{
 //     ctx.body = "我是首页接口!"
 // })
+// 登录
 router.post('/login',UserController.login)
+// 登出
+router.get('/logout',checkToken,UserController.logout)
 export default router
