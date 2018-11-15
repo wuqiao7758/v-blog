@@ -7,9 +7,8 @@
             <use xlink:href="#icon-liebiao"></use>
           </svg>
           <ul class="tags">
-            标签
-            <li class="tag" v-for="(index,tag) in tags" :key="index">
-              {{tag}}
+            <li class="tag">
+              {{tags}}
               <sup>+</sup>
             </li>
           </ul>
@@ -38,15 +37,15 @@ export default {
     return{
       simplemde:'',
       // title:'',
-      tags:'',//标签
+      // tags:'',//标签
       // isPublished:''//是否发布
     }
   },
   computed:{
-    ...mapState(['id','title','content','isPublished'])
+    ...mapState(['id','title','tags','content','isPublished'])
   },
   mounted(){
-    this.tags = this.$store.getters.getTags;
+    // this.tags = this.$store.getters.getTags;
     this.simplemde = new SimpleMDE({
       placeholder:'Talk to me , what are you say ....',
       spellChecker:false,
