@@ -19,4 +19,7 @@ router.post('/login',UserController.login)
 // 登出
 router.get('/logout',checkToken,UserController.logout)
 router.get('/articles',checkToken,ArticleController.getArticles)
+router.post('/articles/add',checkToken,ArticleController.addArticle)
+// 查询一下最新发布的那篇
+router.get('/articles/:id',checkToken,ArticleController.getOneArticle)
 export default router

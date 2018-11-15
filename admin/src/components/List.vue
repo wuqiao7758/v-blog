@@ -10,7 +10,7 @@
         <main>
             <div class="article-list">
                 <section class="btn-container">
-                    <button id="add" class="not-del">新文章</button>
+                    <button id="add" class="not-del" @click="AddArticle">新文章</button>
                 </section>
                 <article-list ref="articleList"></article-list>
             </div>
@@ -25,6 +25,7 @@ import HeaderNav from '@/components/common/HeaderNav'
 import Aside from '@/components/common/Aside'
 import ArticleList from '@/components/common/ArticleList'
 import Editor from '@/components/common/Editor'
+import request from '@/utils/request'
 export default {
   name: 'List',
   data(){
@@ -39,7 +40,21 @@ export default {
     Editor
   },
   methods:{
-
+      AddArticle(){
+          request({
+              method:'post',
+              url:"/articles/add",
+              data:{}
+          }).then(res=>{
+            //   首先
+            // console.log(this.$refs.articleList)
+            let addId = res.insertId
+            this.$refs.articleList.updateList(addId)
+            //   console.log(res);
+          }).catch(err=>{
+              console.log(err)
+          })
+      }
   }
 }
 </script>
