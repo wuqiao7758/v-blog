@@ -6,7 +6,7 @@ const mutations = {
         state.username = username
     },
     // 设置当前正在编辑的文章，将它存放在vuex中
-    SER_CURRENT_ARTICLE:(state,{id,title,tags,content,isPublished})=>{
+    SET_CURRENT_ARTICLE:(state,{id,title,tags,content,isPublished})=>{
         state.id = id 
         state.title = title
         state.tags = tags

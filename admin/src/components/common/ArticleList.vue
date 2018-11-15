@@ -1,7 +1,7 @@
 <template>
     <div>
       <ul class="list">
-        <li class="article"  :class="{active: activeIndex === index, published: isPublished === 1}" v-for="{title,createTime,isPublished,isChosen},index in articleList">
+        <li class="article"  :class="{active: activeIndex === index, published: isPublished === 1}" v-for="{title,createTime,isPublished,isChosen},index) in articleList" @click="select(index)">
           <header>{{title}}</header>
           <p>{{createTime}}</p>
         </li>
@@ -22,8 +22,8 @@ export default {
   },
   // 把全局的vuex里面的state和mutations放在计算属性中
   computed: {
-    ...mapState(["id", "title", "tags", "content", "isPublishe"]),
-    ...mapMutations(["SET_CURRENT_ARTICLE"])
+    ...mapState(["id", "title", "tags", "content", "isPublished"]),
+    // ...mapMutations(["SET_CURRENT_ARTICLE"])
   },
   created() {
     request({
@@ -34,11 +34,14 @@ export default {
         for (let article of res) {
           article.createTime = moment(article.createTime).format(
             "YYYY年-MM月-DD日 HH:mm:ss"
-          );
-          article.isChose = true;
+          )
+          article.isChose = true
         }
         this.articleList.push(...res);
-        // console.log(this.articleList)
+          if(this.articleList.length !==0){
+            this.SET_CURRENT_ARTICLE(this.articleList[0])
+            this.activeIndex = 0
+          }
       })
       .catch(err => {
         console.log(err);
@@ -51,18 +54,25 @@ export default {
         url: `/articles/${updateId}`
       })
         .then(res => {
-          console.log(res);
+          // console.log(res);
           const article = res[0];
           article.createTime = moment(article.createTime).format(
             "YYYY年-MM月-DD日 HH:mm:ss"
           );
           article.isChosec = true;
           this.articleList.unshift(article);
+          // 如果发布了新文章的话，当前选中的文章下标自动 +1
+          this.activeIndex ++
         })
         .catch(err => {
           console.log(err);
         });
-    }
+    },
+    select(index){
+      this.activeIndex = index
+      this.SET_CURRENT_ARTICLE(this.articleList[index])
+    },
+    ...mapMutations(['SET_CURRENT_ARTICLE'])
   }
 };
 </script>

@@ -1,15 +1,16 @@
 <template>
   <div class="editor">
-      <input type="text" class="title" id="title">
+      <input type="text" class="title" id="title" v-model="title">
       <div class="operate-bar">
         <section class="tag-container">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-liebiao"></use>
           </svg>
           <ul class="tags">
-            <li class="tag">
-              标签
-              <sup>x</sup>
+            标签
+            <li class="tag" v-for="(index,tag) in tags" :key="index">
+              {{tag}}
+              <sup>+</sup>
             </li>
           </ul>
           <input type="text" class="tag-input" id="tag-input">
@@ -30,17 +31,26 @@
 <script>
 import 'simplemde/dist/simplemde.min.css'
 import SimpleMDE from 'simplemde'
+import {mapState} from 'vuex'
 export default {
   name: 'Editor',
   data(){
     return{
       simplemde:'',
+      // title:'',
+      tags:'',//标签
+      // isPublished:''//是否发布
     }
   },
+  computed:{
+    ...mapState(['id','title','content','isPublished'])
+  },
   mounted(){
+    this.tags = this.$store.getters.getTags;
     this.simplemde = new SimpleMDE({
       placeholder:'Talk to me , what are you say ....',
-      spellChecker:false
+      spellChecker:false,
+      toolbarTips:false
     })
   }
 }
